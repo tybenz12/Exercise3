@@ -129,16 +129,16 @@ garden_harvest %>%
 garden_harvest %>% 
   mutate(lowercase_variety = str_to_lower(variety), variety_name_length = str_length(lowercase_variety)) %>% 
   group_by(vegetable, variety) %>% 
-  arrange(variety_name_length) %>% 
-  distinct(variety)
+  arrange(vegetable, variety_name_length) %>% 
+  distinct(variety, .keep_all = TRUE)
 ```
 
   6. In the `garden_harvest` data, find all distinct vegetable varieties that have "er" or "ar" in their name. HINT: `str_detect()` with an "or" statement (use the | for "or") and `distinct()`.
 
 ```{r}
 garden_harvest %>% 
-  mutate(hasERoAR = str_detect(str_to_lower(variety), "er") | str_detect(str_to_lower(variety), "ar")) %>% 
-  filter(hasERoAR == TRUE) %>% 
+  mutate(hasERorAR = str_detect(str_to_lower(variety), "er") | str_detect(str_to_lower(variety), "ar")) %>% 
+  filter(hasERorAR == TRUE) %>% 
   distinct(variety)
 ```
 
@@ -187,6 +187,8 @@ Trips %>%
   ggtitle("Density Plot of Bike Rentals")
 ```
   
+  **The density plot shows me that, generally, as it gets colder in DC (it moves towards the winter months), there are less bike rentals. Some of the spikes could correlate with holidays or times where DC become busier for whatever reason.**
+  
   8. A density plot of the events versus time of day.  You can use `mutate()` with `lubridate`'s  `hour()` and `minute()` functions to extract the hour of the day and minute within the hour from `sdate`. Hint: A minute is 1/60 of an hour, so create a variable where 3:30 is 3.5 and 3:45 is 3.75.
   
 ```{r}
@@ -198,6 +200,8 @@ Trips %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("Density Plot of Bike Rentals")
 ```
+  
+  **This density plot tells me that the peak bike riding times are before and after the majority of people's jobs. The spikes are around 7-8 a.m., as people commute to work, and from 5-6 p.m., as people go home or out for after work events.**
   
   9. A bar graph of the events versus day of the week. Put day on the y-axis.
   
@@ -213,6 +217,8 @@ Trips %>%
   
 ```
   
+  **This bar chart shows me that people, on average, rent bikes more during the week. This would line up with my earlier observation that many people use the bikes before and after work to beat rush hour traffic.**
+  
   10. Facet your graph from exercise 8. by day of the week. Is there a pattern?
   
 ```{r}
@@ -224,9 +230,11 @@ Trips %>%
   geom_density() +
   labs(x = "Time Bike Rentals Started", y = "Density") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals  by Day") +
+  ggtitle("Density Plot of Bike Rentals by Day") +
   facet_wrap(~day)
 ```
+  
+  **It is very interesting to see the start contrast between weekdays and weekends. I notice that the weekdays follow the same general trend of the majority of rentals being before and after work. The weekend, however, has a more even spread throughout the day as I would guess most people are out and about exploring the city.**
   
 The variable `client` describes whether the renter is a regular user (level `Registered`) or has not joined the bike-rental organization (`Causal`). The next set of exercises investigate whether these two different categories of users show different rental behavior and how `client` interacts with the patterns you found in the previous exercises. 
 
@@ -239,11 +247,13 @@ Trips %>%
          day = wday(date, label = TRUE)) %>% 
   ggplot(aes(x = time, fill = client)) +
   geom_density(color = NA, alpha = 0.5) +
-  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Client Type") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals  by Day") +
+  ggtitle("Density Plot of Bike Rentals by Day") +
   facet_wrap(~day)
 ```
+
+**This faceted plot shows me that clients who are registered are the people that most strictly follow the typically work day schedule. I would guess these are mostly residents of DC commuting to work. On the other hand, the causal clients are most likely tourists that are just using the bikes to site see while they are visiting the city.**
 
   12. Change the previous graph by adding the argument `position = position_stack()` to `geom_density()`. In your opinion, is this better or worse in terms of telling a story? What are the advantages/disadvantages of each?
   
@@ -254,11 +264,13 @@ Trips %>%
          day = wday(date, label = TRUE)) %>% 
   ggplot(aes(x = time, fill = client)) +
   geom_density(color = NA, alpha = 0.5, position = position_stack()) +
-  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Client Type") +
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("Density Plot of Bike Rentals by Day") +
   facet_wrap(~day)
 ```
+  
+  **I think that the change made the plot look better because there is no overlap where you have to look through one color to see the other. The downside is that it is a way more confusing way to make the same plot as in number 10. It is hard to compare the plots from this question to that of the previous question since they do not represent the same things.**
   
   13. In this graph, go back to using the regular density plot (without `position = position_stack()`). Add a new variable to the dataset called `weekend` which will be "weekend" if the day is Saturday or Sunday and  "weekday" otherwise (HINT: use the `ifelse()` function and the `wday()` function from `lubridate`). Then, update the graph from the previous problem by faceting on the new `weekend` variable. 
   
@@ -270,11 +282,13 @@ Trips %>%
          weekend = ifelse(day == "Sat" |day == "Sun", "weekend", "weekday")) %>% 
   ggplot(aes(x = time, fill = client)) +
   geom_density(color = NA, alpha = 0.5) +
-  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Client Type") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals by Day") +
+  ggtitle("Density Plot of Bike Rentals by Time of Day") +
   facet_wrap(~weekend)
 ```
+  
+  **This plot confirms my suspicions that the registered clients are the ones that follow the typical work schedule, while the casual clients are more dispersed throughout the day. The weekend, however, you see almost the same distribution of both types of clients throughout the day as most people have off of work on Saturday and Sunday.**
   
   14. Change the graph from the previous problem to facet on `client` and fill with `weekend`. What information does this graph tell you that the previous didn't? Is one graph better than the other?
   
@@ -288,9 +302,11 @@ Trips %>%
   geom_density(color = NA, alpha = 0.5) +
   labs(x = "Time Bike Rentals Started", y = "Density", fill = "Weekend") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals by Day") +
+  ggtitle("Density Plot of Bike Rentals by Client Type") +
   facet_wrap(~client)
 ```
+  
+  **I think that this plot is a better way to represent the difference in rental times by type of client. The division by client type makes the observations I have previously made more clear.**
   
 ### Spatial patterns
 
@@ -324,6 +340,8 @@ Trips %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("Percent of Trips by Casual Riders by Station")
 ```
+  
+  **Given the fact that I drive through DC on a pretty regular basis, I would guess that the majority of the higher casual rentals are near the big landmark tourist spots, like the National Zoo that I believe would be represented by the clump in the top left corner of the map. The spots in the middle clump with the lightest blue are near the White House, Washington Monument, and the National Mall.**
   
 **DID YOU REMEMBER TO GO BACK AND CHANGE THIS SET OF EXERCISES TO THE LARGER DATASET? IF NOT, DO THAT NOW.**
 
@@ -381,6 +399,8 @@ breed_traits_total %>%
   scale_x_continuous(expand = c(0,0), limits = c(2012, 2021))
 ```
   
+  **I think it would look kind of cool if the lines in between each point were a fade of the two point colors. I think it would make it easier to see the transition of the breed rank between years. **
+  
   19. Create your own! Requirements: use a `join` or `pivot` function (or both, if you'd like), a `str_XXX()` function, and a `fct_XXX()` function to create a graph using any of the dog datasets. One suggestion is to try to improve the graph you created for the Tidy Tuesday assignment. If you want an extra challenge, find a way to use the dog images in the `breed_rank_all` file - check out the `ggimage` library and [this resource](https://wilkelab.org/ggtext/) for putting images as labels.
   
 ```{r}
@@ -409,13 +429,30 @@ top_ten_dogs %>%
 
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
 
+Github Link: [here](https://github.com/tybenz12/Exercise3)
+
+.md Link: [here](https://github.com/tybenz12/Exercise3/blob/main/03_exercises.md)
+
 ## Challenge problem! 
 
 This problem uses the data from the Tidy Tuesday competition this week, `kids`. If you need to refresh your memory on the data, read about it [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-15/readme.md). 
 
   21. In this exercise, you are going to try to replicate the graph below, created by Georgios Karamanis. I'm sure you can find the exact code on GitHub somewhere, but **DON'T DO THAT!** You will only be graded for putting an effort into this problem. So, give it a try and see how far you can get without doing too much googling. HINT: use `facet_geo()`. The graphic won't load below since it came from a location on my computer. So, you'll have to reference the original html on the moodle page to see it.
+  
 ```{r}
-#![](kids_data_karamanis.jpeg)
+kids %>% 
+  filter(year %in% c(1997, 2016)) %>% 
+  group_by(state) %>% 
+  ggplot(aes(x = year, y = inf_adj_perchild)) +
+  geom_line() +
+  facet_geo(~state) +
+  ggtitle("Change in Public Spending") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(x = "Year", y = "Variable Adjusted for Inflation, per Child") +
+  theme_void() +
+  scale_color_identity() +
+  theme(panel.background = element_rect(fill = "#516c96"), 
+        plot.background = element_rect(fill = "#516c96"))
 ```
 
 

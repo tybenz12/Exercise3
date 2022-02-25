@@ -146,13 +146,13 @@ garden_harvest %>%
 garden_harvest %>% 
   mutate(lowercase_variety = str_to_lower(variety), variety_name_length = str_length(lowercase_variety)) %>% 
   group_by(vegetable, variety) %>% 
-  arrange(variety_name_length) %>% 
-  distinct(variety)
+  arrange(vegetable, variety_name_length) %>% 
+  distinct(variety, .keep_all = TRUE)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["variety"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"potatoes","2":"red"},{"1":"hot peppers","2":"thai"},{"1":"tomatoes","2":"grape"},{"1":"jalapeño","2":"giant"},{"1":"peppers","2":"green"},{"1":"pumpkins","2":"saved"},{"1":"lettuce","2":"reseed"},{"1":"beets","2":"leaves"},{"1":"lettuce","2":"Tatsoi"},{"1":"carrots","2":"Dragon"},{"1":"carrots","2":"Bolero"},{"1":"potatoes","2":"purple"},{"1":"potatoes","2":"yellow"},{"1":"carrots","2":"greens"},{"1":"potatoes","2":"Russet"},{"1":"hot peppers","2":"variety"},{"1":"peppers","2":"variety"},{"1":"broccoli","2":"Yod Fah"},{"1":"edamame","2":"edamame"},{"1":"apple","2":"unknown"},{"1":"spinach","2":"Catalina"},{"1":"cilantro","2":"cilantro"},{"1":"cucumbers","2":"pickling"},{"1":"tomatoes","2":"Big Beef"},{"1":"tomatoes","2":"Jet Star"},{"1":"squash","2":"delicata"},{"1":"squash","2":"Red Kuri"},{"1":"chives","2":"perrenial"},{"1":"strawberries","2":"perrenial"},{"1":"asparagus","2":"asparagus"},{"1":"Swiss chard","2":"Neon Glow"},{"1":"raspberries","2":"perrenial"},{"1":"zucchini","2":"Romanesco"},{"1":"tomatoes","2":"Bonny Best"},{"1":"carrots","2":"King Midas"},{"1":"tomatoes","2":"Better Boy"},{"1":"tomatoes","2":"Old German"},{"1":"tomatoes","2":"Brandywine"},{"1":"tomatoes","2":"Black Krim"},{"1":"tomatoes","2":"volunteers"},{"1":"tomatoes","2":"Amish Paste"},{"1":"beets","2":"Sweet Merlin"},{"1":"squash","2":"Blue (saved)"},{"1":"basil","2":"Isle of Naxos"},{"1":"onions","2":"Delicious Duo"},{"1":"corn","2":"Dorinny Sweet"},{"1":"corn","2":"Golden Bantam"},{"1":"lettuce","2":"mustard greens"},{"1":"beets","2":"Gourmet Golden"},{"1":"lettuce","2":"Lettuce Mixture"},{"1":"tomatoes","2":"Cherokee Purple"},{"1":"tomatoes","2":"Mortgage Lifter"},{"1":"radish","2":"Garden Party Mix"},{"1":"kale","2":"Heirloom Lacinto"},{"1":"peas","2":"Magnolia Blossom"},{"1":"peas","2":"Super Sugar Snap"},{"1":"rutabaga","2":"Improved Helenor"},{"1":"beans","2":"Bush Bush Slender"},{"1":"broccoli","2":"Main Crop Bravado"},{"1":"kohlrabi","2":"Crispy Colors Duo"},{"1":"squash","2":"Waltham Butternut"},{"1":"pumpkins","2":"New England Sugar"},{"1":"beans","2":"Chinese Red Noodle"},{"1":"beans","2":"Classic Slenderette"},{"1":"onions","2":"Long Keeping Rainbow"},{"1":"lettuce","2":"Farmer's Market Blend"},{"1":"pumpkins","2":"Cinderella's Carraige"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["variety"],"name":[2],"type":["chr"],"align":["left"]},{"label":["date"],"name":[3],"type":["date"],"align":["right"]},{"label":["weight"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["units"],"name":[5],"type":["chr"],"align":["left"]},{"label":["lowercase_variety"],"name":[6],"type":["chr"],"align":["left"]},{"label":["variety_name_length"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"apple","2":"unknown","3":"2020-09-26","4":"156","5":"grams","6":"unknown","7":"7"},{"1":"asparagus","2":"asparagus","3":"2020-06-20","4":"20","5":"grams","6":"asparagus","7":"9"},{"1":"basil","2":"Isle of Naxos","3":"2020-06-23","4":"5","5":"grams","6":"isle of naxos","7":"13"},{"1":"beans","2":"Bush Bush Slender","3":"2020-07-06","4":"235","5":"grams","6":"bush bush slender","7":"17"},{"1":"beans","2":"Chinese Red Noodle","3":"2020-08-08","4":"108","5":"grams","6":"chinese red noodle","7":"18"},{"1":"beans","2":"Classic Slenderette","3":"2020-08-05","4":"41","5":"grams","6":"classic slenderette","7":"19"},{"1":"beets","2":"leaves","3":"2020-06-11","4":"8","5":"grams","6":"leaves","7":"6"},{"1":"beets","2":"Sweet Merlin","3":"2020-07-07","4":"10","5":"grams","6":"sweet merlin","7":"12"},{"1":"beets","2":"Gourmet Golden","3":"2020-07-07","4":"62","5":"grams","6":"gourmet golden","7":"14"},{"1":"broccoli","2":"Yod Fah","3":"2020-07-27","4":"372","5":"grams","6":"yod fah","7":"7"},{"1":"broccoli","2":"Main Crop Bravado","3":"2020-09-09","4":"102","5":"grams","6":"main crop bravado","7":"17"},{"1":"carrots","2":"Dragon","3":"2020-07-24","4":"80","5":"grams","6":"dragon","7":"6"},{"1":"carrots","2":"Bolero","3":"2020-07-30","4":"116","5":"grams","6":"bolero","7":"6"},{"1":"carrots","2":"greens","3":"2020-08-29","4":"169","5":"grams","6":"greens","7":"6"},{"1":"carrots","2":"King Midas","3":"2020-07-23","4":"56","5":"grams","6":"king midas","7":"10"},{"1":"chives","2":"perrenial","3":"2020-06-17","4":"8","5":"grams","6":"perrenial","7":"9"},{"1":"cilantro","2":"cilantro","3":"2020-06-23","4":"2","5":"grams","6":"cilantro","7":"8"},{"1":"corn","2":"Dorinny Sweet","3":"2020-08-11","4":"330","5":"grams","6":"dorinny sweet","7":"13"},{"1":"corn","2":"Golden Bantam","3":"2020-08-15","4":"383","5":"grams","6":"golden bantam","7":"13"},{"1":"cucumbers","2":"pickling","3":"2020-07-08","4":"181","5":"grams","6":"pickling","7":"8"},{"1":"edamame","2":"edamame","3":"2020-08-11","4":"109","5":"grams","6":"edamame","7":"7"},{"1":"hot peppers","2":"thai","3":"2020-07-20","4":"12","5":"grams","6":"thai","7":"4"},{"1":"hot peppers","2":"variety","3":"2020-07-20","4":"559","5":"grams","6":"variety","7":"7"},{"1":"jalapeño","2":"giant","3":"2020-07-17","4":"20","5":"grams","6":"giant","7":"5"},{"1":"kale","2":"Heirloom Lacinto","3":"2020-06-13","4":"10","5":"grams","6":"heirloom lacinto","7":"16"},{"1":"kohlrabi","2":"Crispy Colors Duo","3":"2020-09-17","4":"191","5":"grams","6":"crispy colors duo","7":"17"},{"1":"lettuce","2":"reseed","3":"2020-06-06","4":"20","5":"grams","6":"reseed","7":"6"},{"1":"lettuce","2":"Tatsoi","3":"2020-06-20","4":"18","5":"grams","6":"tatsoi","7":"6"},{"1":"lettuce","2":"mustard greens","3":"2020-06-29","4":"23","5":"grams","6":"mustard greens","7":"14"},{"1":"lettuce","2":"Lettuce Mixture","3":"2020-07-22","4":"23","5":"grams","6":"lettuce mixture","7":"15"},{"1":"lettuce","2":"Farmer's Market Blend","3":"2020-06-11","4":"12","5":"grams","6":"farmer's market blend","7":"21"},{"1":"onions","2":"Delicious Duo","3":"2020-07-16","4":"50","5":"grams","6":"delicious duo","7":"13"},{"1":"onions","2":"Long Keeping Rainbow","3":"2020-07-20","4":"102","5":"grams","6":"long keeping rainbow","7":"20"},{"1":"peas","2":"Magnolia Blossom","3":"2020-06-17","4":"8","5":"grams","6":"magnolia blossom","7":"16"},{"1":"peas","2":"Super Sugar Snap","3":"2020-06-17","4":"121","5":"grams","6":"super sugar snap","7":"16"},{"1":"peppers","2":"green","3":"2020-08-04","4":"81","5":"grams","6":"green","7":"5"},{"1":"peppers","2":"variety","3":"2020-07-24","4":"68","5":"grams","6":"variety","7":"7"},{"1":"potatoes","2":"red","3":"2020-10-15","4":"1718","5":"grams","6":"red","7":"3"},{"1":"potatoes","2":"purple","3":"2020-08-06","4":"317","5":"grams","6":"purple","7":"6"},{"1":"potatoes","2":"yellow","3":"2020-08-06","4":"439","5":"grams","6":"yellow","7":"6"},{"1":"potatoes","2":"Russet","3":"2020-09-16","4":"629","5":"grams","6":"russet","7":"6"},{"1":"pumpkins","2":"saved","3":"2020-09-01","4":"4758","5":"grams","6":"saved","7":"5"},{"1":"pumpkins","2":"New England Sugar","3":"2020-09-19","4":"1109","5":"grams","6":"new england sugar","7":"17"},{"1":"pumpkins","2":"Cinderella's Carraige","3":"2020-09-01","4":"7350","5":"grams","6":"cinderella's carraige","7":"21"},{"1":"radish","2":"Garden Party Mix","3":"2020-06-06","4":"36","5":"grams","6":"garden party mix","7":"16"},{"1":"raspberries","2":"perrenial","3":"2020-06-29","4":"30","5":"grams","6":"perrenial","7":"9"},{"1":"rutabaga","2":"Improved Helenor","3":"2020-10-16","4":"883","5":"grams","6":"improved helenor","7":"16"},{"1":"spinach","2":"Catalina","3":"2020-06-11","4":"9","5":"grams","6":"catalina","7":"8"},{"1":"squash","2":"delicata","3":"2020-09-19","4":"307","5":"grams","6":"delicata","7":"8"},{"1":"squash","2":"Red Kuri","3":"2020-09-19","4":"1178","5":"grams","6":"red kuri","7":"8"},{"1":"squash","2":"Blue (saved)","3":"2020-09-01","4":"3227","5":"grams","6":"blue (saved)","7":"12"},{"1":"squash","2":"Waltham Butternut","3":"2020-09-19","4":"1834","5":"grams","6":"waltham butternut","7":"17"},{"1":"strawberries","2":"perrenial","3":"2020-06-18","4":"40","5":"grams","6":"perrenial","7":"9"},{"1":"Swiss chard","2":"Neon Glow","3":"2020-06-21","4":"19","5":"grams","6":"neon glow","7":"9"},{"1":"tomatoes","2":"grape","3":"2020-07-11","4":"24","5":"grams","6":"grape","7":"5"},{"1":"tomatoes","2":"Big Beef","3":"2020-07-21","4":"137","5":"grams","6":"big beef","7":"8"},{"1":"tomatoes","2":"Jet Star","3":"2020-07-28","4":"315","5":"grams","6":"jet star","7":"8"},{"1":"tomatoes","2":"Bonny Best","3":"2020-07-21","4":"339","5":"grams","6":"bonny best","7":"10"},{"1":"tomatoes","2":"Better Boy","3":"2020-07-24","4":"220","5":"grams","6":"better boy","7":"10"},{"1":"tomatoes","2":"Old German","3":"2020-07-28","4":"611","5":"grams","6":"old german","7":"10"},{"1":"tomatoes","2":"Brandywine","3":"2020-08-01","4":"320","5":"grams","6":"brandywine","7":"10"},{"1":"tomatoes","2":"Black Krim","3":"2020-08-01","4":"436","5":"grams","6":"black krim","7":"10"},{"1":"tomatoes","2":"volunteers","3":"2020-08-04","4":"73","5":"grams","6":"volunteers","7":"10"},{"1":"tomatoes","2":"Amish Paste","3":"2020-07-25","4":"463","5":"grams","6":"amish paste","7":"11"},{"1":"tomatoes","2":"Cherokee Purple","3":"2020-07-24","4":"247","5":"grams","6":"cherokee purple","7":"15"},{"1":"tomatoes","2":"Mortgage Lifter","3":"2020-07-27","4":"801","5":"grams","6":"mortgage lifter","7":"15"},{"1":"zucchini","2":"Romanesco","3":"2020-07-06","4":"175","5":"grams","6":"romanesco","7":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -161,8 +161,8 @@ garden_harvest %>%
 
 ```r
 garden_harvest %>% 
-  mutate(hasERoAR = str_detect(str_to_lower(variety), "er") | str_detect(str_to_lower(variety), "ar")) %>% 
-  filter(hasERoAR == TRUE) %>% 
+  mutate(hasERorAR = str_detect(str_to_lower(variety), "er") | str_detect(str_to_lower(variety), "ar")) %>% 
+  filter(hasERorAR == TRUE) %>% 
   distinct(variety)
 ```
 
@@ -221,6 +221,8 @@ Trips %>%
 
 ![](03_exercises_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
   
+  **The density plot shows me that, generally, as it gets colder in DC (it moves towards the winter months), there are less bike rentals. Some of the spikes could correlate with holidays or times where DC become busier for whatever reason.**
+  
   8. A density plot of the events versus time of day.  You can use `mutate()` with `lubridate`'s  `hour()` and `minute()` functions to extract the hour of the day and minute within the hour from `sdate`. Hint: A minute is 1/60 of an hour, so create a variable where 3:30 is 3.5 and 3:45 is 3.75.
   
 
@@ -235,6 +237,8 @@ Trips %>%
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+  
+  **This density plot tells me that the peak bike riding times are before and after the majority of people's jobs. The spikes are around 7-8 a.m., as people commute to work, and from 5-6 p.m., as people go home or out for after work events.**
   
   9. A bar graph of the events versus day of the week. Put day on the y-axis.
   
@@ -252,6 +256,8 @@ Trips %>%
 
 ![](03_exercises_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
   
+  **This bar chart shows me that people, on average, rent bikes more during the week. This would line up with my earlier observation that many people use the bikes before and after work to beat rush hour traffic.**
+  
   10. Facet your graph from exercise 8. by day of the week. Is there a pattern?
   
 
@@ -264,11 +270,13 @@ Trips %>%
   geom_density() +
   labs(x = "Time Bike Rentals Started", y = "Density") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals  by Day") +
+  ggtitle("Density Plot of Bike Rentals by Day") +
   facet_wrap(~day)
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+  
+  **It is very interesting to see the start contrast between weekdays and weekends. I notice that the weekdays follow the same general trend of the majority of rentals being before and after work. The weekend, however, has a more even spread throughout the day as I would guess most people are out and about exploring the city.**
   
 The variable `client` describes whether the renter is a regular user (level `Registered`) or has not joined the bike-rental organization (`Causal`). The next set of exercises investigate whether these two different categories of users show different rental behavior and how `client` interacts with the patterns you found in the previous exercises. 
 
@@ -282,13 +290,15 @@ Trips %>%
          day = wday(date, label = TRUE)) %>% 
   ggplot(aes(x = time, fill = client)) +
   geom_density(color = NA, alpha = 0.5) +
-  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Client Type") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals  by Day") +
+  ggtitle("Density Plot of Bike Rentals by Day") +
   facet_wrap(~day)
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
+**This faceted plot shows me that clients who are registered are the people that most strictly follow the typically work day schedule. I would guess these are mostly residents of DC commuting to work. On the other hand, the causal clients are most likely tourists that are just using the bikes to site see while they are visiting the city.**
 
   12. Change the previous graph by adding the argument `position = position_stack()` to `geom_density()`. In your opinion, is this better or worse in terms of telling a story? What are the advantages/disadvantages of each?
   
@@ -300,13 +310,15 @@ Trips %>%
          day = wday(date, label = TRUE)) %>% 
   ggplot(aes(x = time, fill = client)) +
   geom_density(color = NA, alpha = 0.5, position = position_stack()) +
-  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Client Type") +
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("Density Plot of Bike Rentals by Day") +
   facet_wrap(~day)
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+  
+  **I think that the change made the plot look better because there is no overlap where you have to look through one color to see the other. The downside is that it is a way more confusing way to make the same plot as in number 10. It is hard to compare the plots from this question to that of the previous question since they do not represent the same things.**
   
   13. In this graph, go back to using the regular density plot (without `position = position_stack()`). Add a new variable to the dataset called `weekend` which will be "weekend" if the day is Saturday or Sunday and  "weekday" otherwise (HINT: use the `ifelse()` function and the `wday()` function from `lubridate`). Then, update the graph from the previous problem by faceting on the new `weekend` variable. 
   
@@ -319,13 +331,15 @@ Trips %>%
          weekend = ifelse(day == "Sat" |day == "Sun", "weekend", "weekday")) %>% 
   ggplot(aes(x = time, fill = client)) +
   geom_density(color = NA, alpha = 0.5) +
-  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Client Type") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals by Day") +
+  ggtitle("Density Plot of Bike Rentals by Time of Day") +
   facet_wrap(~weekend)
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+  
+  **This plot confirms my suspicions that the registered clients are the ones that follow the typical work schedule, while the casual clients are more dispersed throughout the day. The weekend, however, you see almost the same distribution of both types of clients throughout the day as most people have off of work on Saturday and Sunday.**
   
   14. Change the graph from the previous problem to facet on `client` and fill with `weekend`. What information does this graph tell you that the previous didn't? Is one graph better than the other?
   
@@ -340,11 +354,13 @@ Trips %>%
   geom_density(color = NA, alpha = 0.5) +
   labs(x = "Time Bike Rentals Started", y = "Density", fill = "Weekend") +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Density Plot of Bike Rentals by Day") +
+  ggtitle("Density Plot of Bike Rentals by Client Type") +
   facet_wrap(~client)
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+  
+  **I think that this plot is a better way to represent the difference in rental times by type of client. The division by client type makes the observations I have previously made more clear.**
   
 ### Spatial patterns
 
@@ -384,6 +400,8 @@ Trips %>%
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+  
+  **Given the fact that I drive through DC on a pretty regular basis, I would guess that the majority of the higher casual rentals are near the big landmark tourist spots, like the National Zoo that I believe would be represented by the clump in the top left corner of the map. The spots in the middle clump with the lightest blue are near the White House, Washington Monument, and the National Mall.**
   
 **DID YOU REMEMBER TO GO BACK AND CHANGE THIS SET OF EXERCISES TO THE LARGER DATASET? IF NOT, DO THAT NOW.**
 
@@ -446,6 +464,8 @@ breed_traits_total %>%
 
 ![](03_exercises_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
   
+  **I think it would look kind of cool if the lines in between each point were a fade of the two point colors. I think it would make it easier to see the transition of the breed rank between years. **
+  
   19. Create your own! Requirements: use a `join` or `pivot` function (or both, if you'd like), a `str_XXX()` function, and a `fct_XXX()` function to create a graph using any of the dog datasets. One suggestion is to try to improve the graph you created for the Tidy Tuesday assignment. If you want an extra challenge, find a way to use the dog images in the `breed_rank_all` file - check out the `ggimage` library and [this resource](https://wilkelab.org/ggtext/) for putting images as labels.
   
 
@@ -477,15 +497,34 @@ top_ten_dogs %>%
 
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
 
+Github Link: [here](https://github.com/tybenz12/Exercise3)
+
+.md Link: [here](https://github.com/tybenz12/Exercise3/blob/main/03_exercises.md)
+
 ## Challenge problem! 
 
 This problem uses the data from the Tidy Tuesday competition this week, `kids`. If you need to refresh your memory on the data, read about it [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-15/readme.md). 
 
   21. In this exercise, you are going to try to replicate the graph below, created by Georgios Karamanis. I'm sure you can find the exact code on GitHub somewhere, but **DON'T DO THAT!** You will only be graded for putting an effort into this problem. So, give it a try and see how far you can get without doing too much googling. HINT: use `facet_geo()`. The graphic won't load below since it came from a location on my computer. So, you'll have to reference the original html on the moodle page to see it.
+  
 
 ```r
-#![](kids_data_karamanis.jpeg)
+kids %>% 
+  filter(year %in% c(1997, 2016)) %>% 
+  group_by(state) %>% 
+  ggplot(aes(x = year, y = inf_adj_perchild)) +
+  geom_line() +
+  facet_geo(~state) +
+  ggtitle("Change in Public Spending") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(x = "Year", y = "Variable Adjusted for Inflation, per Child") +
+  theme_void() +
+  scale_color_identity() +
+  theme(panel.background = element_rect(fill = "#516c96"), 
+        plot.background = element_rect(fill = "#516c96"))
 ```
+
+![](03_exercises_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
 
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**
