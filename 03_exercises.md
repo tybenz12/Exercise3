@@ -81,24 +81,96 @@ These exercises will reiterate what you learned in the "Expanding the data wrang
   1. Summarize the `garden_harvest` data to find the total harvest weight in pounds for each vegetable and day of week (HINT: use the `wday()` function from `lubridate`). Display the results so that the vegetables are rows but the days of the week are columns.
 
 
+```r
+garden_harvest %>% 
+  mutate(day = wday(date, label = TRUE)) %>% 
+  group_by(vegetable, day) %>% 
+  summarize(total_weight_lbs = 0.00220462* sum(weight)) %>% 
+  ungroup() %>% 
+  pivot_wider(id_cols = vegetable, 
+              names_from = day,
+              values_from = total_weight_lbs, 
+              values_fill = 0)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sat"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Tue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Thu"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Fri"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Sun"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Wed"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"apple","2":"0.34392072","3":"0.0000000","4":"0.00000000","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.00000000"},{"1":"asparagus","2":"0.04409240","3":"0.0000000","4":"0.00000000","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.00000000"},{"1":"basil","2":"0.41005932","3":"0.0661386","4":"0.11023100","5":"0.02645544","6":"0.46737944","7":"0.00000000","8":"0.00000000"},{"1":"beans","2":"4.70906832","3":"6.5080382","4":"4.38719380","5":"3.39291018","6":"1.52559704","7":"1.91361016","8":"4.08295624"},{"1":"beets","2":"0.37919464","3":"0.6724091","4":"0.15873264","5":"11.89172028","6":"0.02425082","7":"0.32187452","8":"0.18298346"},{"1":"broccoli","2":"0.00000000","3":"0.8201186","4":"0.00000000","5":"0.00000000","6":"0.16534650","7":"1.25883802","8":"0.70768302"},{"1":"carrots","2":"2.33028334","3":"0.8708249","4":"0.35273920","5":"2.67420406","6":"2.13848140","7":"2.93655384","8":"5.56225626"},{"1":"chives","2":"0.00000000","3":"0.0000000","4":"0.00000000","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.01763696"},{"1":"cilantro","2":"0.03747854","3":"0.0000000","4":"0.00440924","5":"0.00000000","6":"0.07275246","7":"0.00000000","8":"0.00000000"},{"1":"corn","2":"1.31615814","3":"0.7583893","4":"0.72752460","5":"0.00000000","6":"3.44802568","7":"1.45725382","8":"5.30211110"},{"1":"cucumbers","2":"9.64080326","3":"4.7752069","4":"10.04645334","5":"3.30693000","6":"7.42956940","7":"3.10410496","8":"5.30652034"},{"1":"edamame","2":"4.68922674","3":"0.0000000","4":"1.40213832","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.00000000"},{"1":"hot peppers","2":"0.00000000","3":"1.2588380","4":"0.14109568","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.06834322"},{"1":"jalapeño","2":"1.50796008","3":"5.5534378","4":"0.54895038","5":"0.22487124","6":"1.29411194","7":"0.26234978","8":"0.48060716"},{"1":"kale","2":"1.49032312","3":"2.0679336","4":"0.28219136","5":"0.27998674","6":"0.38139926","7":"0.82673250","8":"0.61729360"},{"1":"kohlrabi","2":"0.00000000","3":"0.0000000","4":"0.00000000","5":"0.42108242","6":"0.00000000","7":"0.00000000","8":"0.00000000"},{"1":"lettuce","2":"1.31615814","3":"2.4581513","4":"0.91712192","5":"2.45153744","6":"1.80117454","7":"1.46607230","8":"1.18608556"},{"1":"onions","2":"1.91361016","3":"0.5092672","4":"0.70768302","5":"0.60186126","6":"0.07275246","7":"0.26014516","8":"0.00000000"},{"1":"peas","2":"2.85277828","3":"4.6341112","4":"2.06793356","5":"3.39731942","6":"0.93696350","7":"2.05691046","8":"1.08026380"},{"1":"peppers","2":"1.38229674","3":"2.5264945","4":"1.44402610","5":"0.70988764","6":"0.33510224","7":"0.50265336","8":"2.44271896"},{"1":"potatoes","2":"2.80207202","3":"0.9700328","4":"0.00000000","5":"11.85203712","6":"3.74124014","7":"0.00000000","8":"4.57017726"},{"1":"pumpkins","2":"92.68883866","3":"30.1195184","4":"31.85675900","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.00000000"},{"1":"radish","2":"0.23148510","3":"0.1962112","4":"0.09479866","5":"0.14770954","6":"0.19400656","7":"0.08157094","8":"0.00000000"},{"1":"raspberries","2":"0.53351804","3":"0.1300726","4":"0.33510224","5":"0.28880522","6":"0.57099658","7":"0.00000000","8":"0.00000000"},{"1":"rutabaga","2":"6.89825598","3":"0.0000000","4":"0.00000000","5":"0.00000000","6":"3.57809826","7":"19.26396956","8":"0.00000000"},{"1":"spinach","2":"0.26014516","3":"0.1477095","4":"0.49603950","5":"0.23368972","6":"0.19621118","7":"0.48722102","8":"0.21384814"},{"1":"squash","2":"56.22221924","3":"24.3345956","4":"18.46810174","5":"0.00000000","6":"0.00000000","7":"0.00000000","8":"0.00000000"},{"1":"strawberries","2":"0.16975574","3":"0.4784025","4":"0.00000000","5":"0.08818480","6":"0.48722102","7":"0.08157094","8":"0.00000000"},{"1":"Swiss chard","2":"0.73413846","3":"1.0736499","4":"0.07054784","5":"2.23107544","6":"0.61729360","7":"1.24781492","8":"0.90830344"},{"1":"tomatoes","2":"35.12621046","3":"11.4926841","4":"48.75076206","5":"34.51773534","6":"85.07628580","7":"75.60964752","8":"58.26590198"},{"1":"zucchini","2":"3.41495638","3":"12.1959578","4":"16.46851140","5":"34.63017096","6":"18.72163304","7":"12.23564100","8":"2.04147812"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
   2. Summarize the `garden_harvest` data to find the total harvest in pound for each vegetable variety and then try adding the plot from the `garden_planting` table. This will not turn out perfectly. What is the problem? How might you fix it?
 
 
+```r
+garden_harvest %>% 
+  group_by(vegetable, variety) %>% 
+  summarize(tot_weight_lbs = 0.00220462* sum(weight)) %>% 
+  left_join(garden_planting, 
+            by = c("vegetable", "variety"))
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["variety"],"name":[2],"type":["chr"],"align":["left"]},{"label":["tot_weight_lbs"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["plot"],"name":[4],"type":["chr"],"align":["left"]},{"label":["number_seeds_planted"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[6],"type":["date"],"align":["right"]},{"label":["number_seeds_exact"],"name":[7],"type":["lgl"],"align":["right"]},{"label":["notes"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"apple","2":"unknown","3":"0.34392072","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"asparagus","2":"asparagus","3":"0.04409240","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"basil","2":"Isle of Naxos","3":"1.08026380","4":"potB","5":"40","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"beans","2":"Bush Bush Slender","3":"22.12997556","4":"M","5":"30","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"beans","2":"Bush Bush Slender","3":"22.12997556","4":"D","5":"10","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"beans","2":"Chinese Red Noodle","3":"0.78484472","4":"K","5":"5","6":"2020-05-25","7":"TRUE","8":"NA"},{"1":"beans","2":"Chinese Red Noodle","3":"0.78484472","4":"L","5":"5","6":"2020-05-25","7":"TRUE","8":"NA"},{"1":"beans","2":"Classic Slenderette","3":"3.60455370","4":"E","5":"29","6":"2020-06-20","7":"TRUE","8":"NA"},{"1":"beets","2":"Gourmet Golden","3":"7.02171470","4":"H","5":"40","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"beets","2":"leaves","3":"0.22266662","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"beets","2":"Sweet Merlin","3":"6.38678414","4":"H","5":"40","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"broccoli","2":"Main Crop Bravado","3":"2.13186754","4":"D","5":"7","6":"2020-05-22","7":"TRUE","8":"NA"},{"1":"broccoli","2":"Main Crop Bravado","3":"2.13186754","4":"I","5":"7","6":"2020-05-22","7":"TRUE","8":"NA"},{"1":"broccoli","2":"Yod Fah","3":"0.82011864","4":"P","5":"25","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"carrots","2":"Bolero","3":"8.29157582","4":"H","5":"50","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"carrots","2":"Bolero","3":"8.29157582","4":"L","5":"50","6":"2020-05-25","7":"FALSE","8":"NA"},{"1":"carrots","2":"Dragon","3":"4.10500244","4":"H","5":"40","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"carrots","2":"Dragon","3":"4.10500244","4":"L","5":"50","6":"2020-05-25","7":"FALSE","8":"NA"},{"1":"carrots","2":"greens","3":"0.37258078","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"carrots","2":"King Midas","3":"4.09618396","4":"H","5":"50","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"carrots","2":"King Midas","3":"4.09618396","4":"L","5":"50","6":"2020-05-25","7":"FALSE","8":"NA"},{"1":"chives","2":"perrenial","3":"0.01763696","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"cilantro","2":"cilantro","3":"0.11464024","4":"potD","5":"15","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"cilantro","2":"cilantro","3":"0.11464024","4":"E","5":"20","6":"2020-06-20","7":"FALSE","8":"NA"},{"1":"corn","2":"Dorinny Sweet","3":"11.40670388","4":"A","5":"20","6":"2020-05-25","7":"FALSE","8":"NA"},{"1":"corn","2":"Golden Bantam","3":"1.60275874","4":"B","5":"20","6":"2020-05-25","7":"FALSE","8":"NA"},{"1":"cucumbers","2":"pickling","3":"43.60958822","4":"L","5":"20","6":"2020-05-25","7":"FALSE","8":"NA"},{"1":"edamame","2":"edamame","3":"6.09136506","4":"O","5":"25","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"hot peppers","2":"thai","3":"0.14770954","4":"potB","5":"1","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"hot peppers","2":"variety","3":"1.32056738","4":"potC","5":"6","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"jalapeño","2":"giant","3":"9.87228836","4":"L","5":"4","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"kale","2":"Heirloom Lacinto","3":"5.94586014","4":"P","5":"30","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"kale","2":"Heirloom Lacinto","3":"5.94586014","4":"front","5":"30","6":"2020-06-20","7":"FALSE","8":"NA"},{"1":"kohlrabi","2":"Crispy Colors Duo","3":"0.42108242","4":"front","5":"10","6":"2020-05-20","7":"FALSE","8":"NA"},{"1":"lettuce","2":"Farmer's Market Blend","3":"3.80296950","4":"C","5":"60","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"lettuce","2":"Farmer's Market Blend","3":"3.80296950","4":"L","5":"60","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"lettuce","2":"Lettuce Mixture","3":"4.74875148","4":"G","5":"200","6":"2020-06-20","7":"FALSE","8":"NA"},{"1":"lettuce","2":"mustard greens","3":"0.05070626","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"lettuce","2":"reseed","3":"0.09920790","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"lettuce","2":"Tatsoi","3":"2.89466606","4":"P","5":"25","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"onions","2":"Delicious Duo","3":"0.75398004","4":"P","5":"25","6":"2020-04-26","7":"FALSE","8":"NA"},{"1":"onions","2":"Long Keeping Rainbow","3":"3.31133924","4":"H","5":"40","6":"2020-04-26","7":"FALSE","8":"NA"},{"1":"peas","2":"Magnolia Blossom","3":"7.45822946","4":"B","5":"24","6":"2020-04-19","7":"TRUE","8":"NA"},{"1":"peas","2":"Super Sugar Snap","3":"9.56805080","4":"A","5":"22","6":"2020-04-19","7":"TRUE","8":"NA"},{"1":"peppers","2":"green","3":"5.69232884","4":"K","5":"12","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"peppers","2":"green","3":"5.69232884","4":"O","5":"5","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"peppers","2":"variety","3":"3.65085072","4":"potA","5":"3","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"peppers","2":"variety","3":"3.65085072","4":"potA","5":"3","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"peppers","2":"variety","3":"3.65085072","4":"potD","5":"1","6":"2020-05-21","7":"TRUE","8":"NA"},{"1":"potatoes","2":"purple","3":"3.00930630","4":"D","5":"5","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"potatoes","2":"red","3":"4.43349082","4":"I","5":"3","6":"2020-05-22","7":"FALSE","8":"NA"},{"1":"potatoes","2":"Russet","3":"9.09185288","4":"D","5":"8","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"potatoes","2":"yellow","3":"7.40090934","4":"I","5":"10","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"potatoes","2":"yellow","3":"7.40090934","4":"I","5":"8","6":"2020-05-22","7":"TRUE","8":"NA"},{"1":"pumpkins","2":"Cinderella's Carraige","3":"32.87308882","4":"B","5":"3","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"pumpkins","2":"New England Sugar","3":"44.85960776","4":"K","5":"4","6":"2020-05-25","7":"TRUE","8":"NA"},{"1":"pumpkins","2":"saved","3":"76.93241952","4":"B","5":"8","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"radish","2":"Garden Party Mix","3":"0.94578198","4":"C","5":"20","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"radish","2":"Garden Party Mix","3":"0.94578198","4":"G","5":"30","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"radish","2":"Garden Party Mix","3":"0.94578198","4":"H","5":"15","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"raspberries","2":"perrenial","3":"1.85849466","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"rutabaga","2":"Improved Helenor","3":"29.74032380","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"spinach","2":"Catalina","3":"2.03486426","4":"H","5":"50","6":"2020-05-16","7":"FALSE","8":"NA"},{"1":"spinach","2":"Catalina","3":"2.03486426","4":"E","5":"100","6":"2020-06-20","7":"FALSE","8":"NA"},{"1":"squash","2":"Blue (saved)","3":"41.52401770","4":"A","5":"4","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"squash","2":"Blue (saved)","3":"41.52401770","4":"B","5":"8","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"squash","2":"delicata","3":"10.49840044","4":"K","5":"8","6":"2020-05-25","7":"TRUE","8":"NA"},{"1":"squash","2":"Red Kuri","3":"22.73183682","4":"A","5":"4","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"squash","2":"Red Kuri","3":"22.73183682","4":"B","5":"4","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"squash","2":"Red Kuri","3":"22.73183682","4":"side","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"squash","2":"Waltham Butternut","3":"24.27066158","4":"A","5":"4","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"squash","2":"Waltham Butternut","3":"24.27066158","4":"K","5":"6","6":"2020-05-25","7":"TRUE","8":"NA"},{"1":"strawberries","2":"perrenial","3":"1.30513504","4":"NA","5":"NA","6":"<NA>","7":"NA","8":"NA"},{"1":"Swiss chard","2":"Neon Glow","3":"6.88282364","4":"M","5":"25","6":"2020-05-02","7":"FALSE","8":"NA"},{"1":"tomatoes","2":"Amish Paste","3":"65.67342518","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Amish Paste","3":"65.67342518","4":"N","5":"2","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Better Boy","3":"34.00846812","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Better Boy","3":"34.00846812","4":"N","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Big Beef","3":"24.99377694","4":"N","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Black Krim","3":"15.80712540","4":"N","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Bonny Best","3":"24.92322910","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Brandywine","3":"15.64618814","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Cherokee Purple","3":"15.71232674","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"grape","3":"32.39468628","4":"O","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Jet Star","3":"15.02448530","4":"N","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Mortgage Lifter","3":"26.32536742","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"died"},{"1":"tomatoes","2":"Mortgage Lifter","3":"26.32536742","4":"N","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"Old German","3":"26.71778978","4":"J","5":"1","6":"2020-05-20","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"volunteers","3":"51.61235882","4":"N","5":"1","6":"2020-06-03","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"volunteers","3":"51.61235882","4":"J","5":"1","6":"2020-06-03","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"volunteers","3":"51.61235882","4":"front","5":"5","6":"2020-06-03","7":"TRUE","8":"NA"},{"1":"tomatoes","2":"volunteers","3":"51.61235882","4":"O","5":"2","6":"2020-06-03","7":"TRUE","8":"NA"},{"1":"zucchini","2":"Romanesco","3":"99.70834874","4":"D","5":"3","6":"2020-05-21","7":"TRUE","8":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+**The problem is that some varieties of vegetables are planted in more than one location. It would be more efficient to have one instance of each variety and have multiple plots in the plot column. Perhaps we could mutate the garden planting dataframe to combine each instance of a variety into one.**
 
   3. I would like to understand how much money I "saved" by gardening, for each vegetable type. Describe how I could use the `garden_harvest` and `garden_spending` datasets, along with data from somewhere like [this](https://products.wholefoodsmarket.com/search?sort=relevance&store=10542) to answer this question. You can answer this in words, referencing various join functions. You don't need R code but could provide some if it's helpful.
+  
+  **First, you would create a dataframe that contains the wholefoods prices for each vegetable and variety of vegetable that are from the garden_harvest and garden_spending dataframes. Once that is created you would join the garden_spending and the new wholefoods dataframe you created. Once those are merged, you could calculate the amount you spent on each vegetable, along with a price per pound amount. Then you could join that dateframe together with the garden_harvest dataframe. Now that all the information you need is in one place, you can calculate how much it would have cost to buy the same amount of vegetables that you produced using your price per pound and total weight amounts and then subtract the cost to plant each vegetable to find how much you would save by gardening. **
 
   4. Subset the data to tomatoes. Reorder the tomato varieties from smallest to largest first harvest date. Create a barplot of total harvest in pounds for each variety, in the new order.CHALLENGE: add the date near the end of the bar. (This is probably not a super useful graph because it's difficult to read. This is more an exercise in using some of the functions you just learned.)
 
 
+```r
+garden_harvest %>% 
+  filter(vegetable %in% c("tomatoes")) %>% 
+  group_by(variety, date) %>% 
+  summarize(tot_weight_lbs = 0.00220462* sum(weight)) %>% 
+  ggplot(aes(x = tot_weight_lbs, y = fct_reorder(variety, date, min, .desc = TRUE))) +
+  geom_bar(stat = "identity") +
+  ggtitle("Tomato Harvests Ordered by First Harvest Date") +
+  labs(x = "Total Harvest Weight (lbs)", y = "Variety of Tomato") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
   5. In the `garden_harvest` data, create two new variables: one that makes the varieties lowercase and another that finds the length of the variety name. Arrange the data by vegetable and length of variety name (smallest to largest), with one row for each vegetable variety. HINT: use `str_to_lower()`, `str_length()`, and `distinct()`.
   
 
+```r
+garden_harvest %>% 
+  mutate(lowercase_variety = str_to_lower(variety), variety_name_length = str_length(lowercase_variety)) %>% 
+  group_by(vegetable, variety) %>% 
+  arrange(variety_name_length) %>% 
+  distinct(variety)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["variety"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"potatoes","2":"red"},{"1":"hot peppers","2":"thai"},{"1":"tomatoes","2":"grape"},{"1":"jalapeño","2":"giant"},{"1":"peppers","2":"green"},{"1":"pumpkins","2":"saved"},{"1":"lettuce","2":"reseed"},{"1":"beets","2":"leaves"},{"1":"lettuce","2":"Tatsoi"},{"1":"carrots","2":"Dragon"},{"1":"carrots","2":"Bolero"},{"1":"potatoes","2":"purple"},{"1":"potatoes","2":"yellow"},{"1":"carrots","2":"greens"},{"1":"potatoes","2":"Russet"},{"1":"hot peppers","2":"variety"},{"1":"peppers","2":"variety"},{"1":"broccoli","2":"Yod Fah"},{"1":"edamame","2":"edamame"},{"1":"apple","2":"unknown"},{"1":"spinach","2":"Catalina"},{"1":"cilantro","2":"cilantro"},{"1":"cucumbers","2":"pickling"},{"1":"tomatoes","2":"Big Beef"},{"1":"tomatoes","2":"Jet Star"},{"1":"squash","2":"delicata"},{"1":"squash","2":"Red Kuri"},{"1":"chives","2":"perrenial"},{"1":"strawberries","2":"perrenial"},{"1":"asparagus","2":"asparagus"},{"1":"Swiss chard","2":"Neon Glow"},{"1":"raspberries","2":"perrenial"},{"1":"zucchini","2":"Romanesco"},{"1":"tomatoes","2":"Bonny Best"},{"1":"carrots","2":"King Midas"},{"1":"tomatoes","2":"Better Boy"},{"1":"tomatoes","2":"Old German"},{"1":"tomatoes","2":"Brandywine"},{"1":"tomatoes","2":"Black Krim"},{"1":"tomatoes","2":"volunteers"},{"1":"tomatoes","2":"Amish Paste"},{"1":"beets","2":"Sweet Merlin"},{"1":"squash","2":"Blue (saved)"},{"1":"basil","2":"Isle of Naxos"},{"1":"onions","2":"Delicious Duo"},{"1":"corn","2":"Dorinny Sweet"},{"1":"corn","2":"Golden Bantam"},{"1":"lettuce","2":"mustard greens"},{"1":"beets","2":"Gourmet Golden"},{"1":"lettuce","2":"Lettuce Mixture"},{"1":"tomatoes","2":"Cherokee Purple"},{"1":"tomatoes","2":"Mortgage Lifter"},{"1":"radish","2":"Garden Party Mix"},{"1":"kale","2":"Heirloom Lacinto"},{"1":"peas","2":"Magnolia Blossom"},{"1":"peas","2":"Super Sugar Snap"},{"1":"rutabaga","2":"Improved Helenor"},{"1":"beans","2":"Bush Bush Slender"},{"1":"broccoli","2":"Main Crop Bravado"},{"1":"kohlrabi","2":"Crispy Colors Duo"},{"1":"squash","2":"Waltham Butternut"},{"1":"pumpkins","2":"New England Sugar"},{"1":"beans","2":"Chinese Red Noodle"},{"1":"beans","2":"Classic Slenderette"},{"1":"onions","2":"Long Keeping Rainbow"},{"1":"lettuce","2":"Farmer's Market Blend"},{"1":"pumpkins","2":"Cinderella's Carraige"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
   6. In the `garden_harvest` data, find all distinct vegetable varieties that have "er" or "ar" in their name. HINT: `str_detect()` with an "or" statement (use the | for "or") and `distinct()`.
 
 
+```r
+garden_harvest %>% 
+  mutate(hasERoAR = str_detect(str_to_lower(variety), "er") | str_detect(str_to_lower(variety), "ar")) %>% 
+  filter(hasERoAR == TRUE) %>% 
+  distinct(variety)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["variety"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Garden Party Mix"},{"1":"Farmer's Market Blend"},{"1":"Super Sugar Snap"},{"1":"perrenial"},{"1":"asparagus"},{"1":"mustard greens"},{"1":"Bush Bush Slender"},{"1":"Sweet Merlin"},{"1":"variety"},{"1":"Cherokee Purple"},{"1":"Better Boy"},{"1":"Mortgage Lifter"},{"1":"Old German"},{"1":"Jet Star"},{"1":"Bolero"},{"1":"volunteers"},{"1":"Classic Slenderette"},{"1":"Cinderella's Carraige"},{"1":"Waltham Butternut"},{"1":"New England Sugar"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 
 ## Bicycle-Use Patterns
@@ -124,7 +196,7 @@ Here is the code to read in the data. We do this a little differently than usual
 
 ```r
 data_site <- 
-  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data-Small.rds" 
+  "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
 ```
@@ -138,46 +210,180 @@ It's natural to expect that bikes are rented more at some times of day, some day
   7. A density plot, which is a smoothed out histogram, of the events versus `sdate`. Use `geom_density()`.
   
 
+```r
+Trips %>% 
+  ggplot(aes(x = sdate)) +
+  geom_density() +
+  labs(x = "Date Bike Rentals Started", y = "Density") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
   
   8. A density plot of the events versus time of day.  You can use `mutate()` with `lubridate`'s  `hour()` and `minute()` functions to extract the hour of the day and minute within the hour from `sdate`. Hint: A minute is 1/60 of an hour, so create a variable where 3:30 is 3.5 and 3:45 is 3.75.
   
 
+```r
+Trips %>% 
+  mutate(time = hour(sdate) + (minute(sdate)/60)) %>% 
+  ggplot(aes(x = time)) +
+  geom_density() +
+  labs(x = "Time Bike Rentals Started", y = "Density") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
   
   9. A bar graph of the events versus day of the week. Put day on the y-axis.
   
 
+```r
+Trips %>% 
+  mutate(date = date(sdate), day = wday(date, label = TRUE)) %>% 
+  group_by(day) %>% 
+  ggplot(aes(y = day)) +
+  geom_bar() +
+  ggtitle("Bike Rentals by Day") +
+  labs(x = "Number of Rentals", y = "Day of the Week") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
   
   10. Facet your graph from exercise 8. by day of the week. Is there a pattern?
   
 
+```r
+Trips %>% 
+  mutate(time = hour(sdate) + (minute(sdate)/60), 
+         date = date(sdate), 
+         day = wday(date, label = TRUE)) %>% 
+  ggplot(aes(x = time)) +
+  geom_density() +
+  labs(x = "Time Bike Rentals Started", y = "Density") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals  by Day") +
+  facet_wrap(~day)
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
   
 The variable `client` describes whether the renter is a regular user (level `Registered`) or has not joined the bike-rental organization (`Causal`). The next set of exercises investigate whether these two different categories of users show different rental behavior and how `client` interacts with the patterns you found in the previous exercises. 
 
   11. Change the graph from exercise 10 to set the `fill` aesthetic for `geom_density()` to the `client` variable. You should also set `alpha = .5` for transparency and `color=NA` to suppress the outline of the density function.
   
 
+```r
+Trips %>% 
+  mutate(time = hour(sdate) + (minute(sdate)/60), 
+         date = date(sdate), 
+         day = wday(date, label = TRUE)) %>% 
+  ggplot(aes(x = time, fill = client)) +
+  geom_density(color = NA, alpha = 0.5) +
+  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals  by Day") +
+  facet_wrap(~day)
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
   12. Change the previous graph by adding the argument `position = position_stack()` to `geom_density()`. In your opinion, is this better or worse in terms of telling a story? What are the advantages/disadvantages of each?
   
 
+```r
+Trips %>% 
+  mutate(time = hour(sdate) + (minute(sdate)/60), 
+         date = date(sdate), 
+         day = wday(date, label = TRUE)) %>% 
+  ggplot(aes(x = time, fill = client)) +
+  geom_density(color = NA, alpha = 0.5, position = position_stack()) +
+  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals by Day") +
+  facet_wrap(~day)
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
   
   13. In this graph, go back to using the regular density plot (without `position = position_stack()`). Add a new variable to the dataset called `weekend` which will be "weekend" if the day is Saturday or Sunday and  "weekday" otherwise (HINT: use the `ifelse()` function and the `wday()` function from `lubridate`). Then, update the graph from the previous problem by faceting on the new `weekend` variable. 
   
 
+```r
+Trips %>% 
+  mutate(time = hour(sdate) + (minute(sdate)/60), 
+         date = date(sdate), 
+         day = wday(date, label = TRUE), 
+         weekend = ifelse(day == "Sat" |day == "Sun", "weekend", "weekday")) %>% 
+  ggplot(aes(x = time, fill = client)) +
+  geom_density(color = NA, alpha = 0.5) +
+  labs(x = "Time Bike Rentals Started", y = "Density", color = "Client Type") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals by Day") +
+  facet_wrap(~weekend)
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
   
-  14. Change the graph from the previous problem to facet on `client` and fill with `weekday`. What information does this graph tell you that the previous didn't? Is one graph better than the other?
+  14. Change the graph from the previous problem to facet on `client` and fill with `weekend`. What information does this graph tell you that the previous didn't? Is one graph better than the other?
   
 
+```r
+Trips %>% 
+  mutate(time = hour(sdate) + (minute(sdate)/60), 
+         date = date(sdate), 
+         day = wday(date, label = TRUE), 
+         weekend = ifelse(day == "Sat" | day == "Sun", "weekend", "weekday")) %>% 
+  ggplot(aes(x = time, fill = weekend)) +
+  geom_density(color = NA, alpha = 0.5) +
+  labs(x = "Time Bike Rentals Started", y = "Density", fill = "Weekend") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Density Plot of Bike Rentals by Day") +
+  facet_wrap(~client)
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
   
 ### Spatial patterns
 
   15. Use the latitude and longitude variables in `Stations` to make a visualization of the total number of departures from each station in the `Trips` data. Use either color or size to show the variation in number of departures. We will improve this plot next week when we learn about maps!
   
 
+```r
+Trips %>% 
+  left_join(Stations, 
+            by = c("sstation" = "name")) %>% 
+  group_by(sstation, lat, long) %>% 
+  mutate(count = length(`lat`[`lat`])) %>% 
+  ggplot(aes(x = long, y = lat)) +
+  geom_point(aes(color = count)) +
+  labs(x = "Longitude", y = "Latitude", color = "Number of Trips") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Number of Trips by Station")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
   
   16. Only 14.4% of the trips in our data are carried out by casual users. Create a plot that shows which area(s) have stations with a much higher percentage of departures by casual users. What patterns do you notice? (Again, we'll improve this next week when we learn about maps).
   
 
+```r
+Trips %>% 
+  left_join(Stations, 
+            by = c("sstation" = "name")) %>% 
+  group_by(sstation, lat, long) %>% 
+  mutate(count = length(`lat`[`lat`]), 
+            percent_casual = (length(`client`[`client` == "Casual"])/count) * 100) %>% 
+  ggplot(aes(x = long, y = lat)) +
+  geom_point(aes(color = percent_casual)) +
+  labs(x = "Longitude", y = "Latitude", color = "Percent of Casual Riders") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Percent of Trips by Casual Riders by Station")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
   
 **DID YOU REMEMBER TO GO BACK AND CHANGE THIS SET OF EXERCISES TO THE LARGER DATASET? IF NOT, DO THAT NOW.**
 
@@ -188,14 +394,84 @@ In this section, we'll use the data from 2022-02-01 Tidy Tuesday. If you didn't 
   17. The final product of this exercise will be a graph that has breed on the y-axis and the sum of the numeric ratings in the `breed_traits` dataset on the x-axis, with a dot for each rating. First, create a new dataset called `breed_traits_total` that has two variables -- `Breed` and `total_rating`. The `total_rating` variable is the sum of the numeric ratings in the `breed_traits` dataset (we'll use this dataset again in the next problem). Then, create the graph just described. Omit Breeds with a `total_rating` of 0 and order the Breeds from highest to lowest ranked. You may want to adjust the `fig.height` and `fig.width` arguments inside the code chunk options (eg. `{r, fig.height=8, fig.width=4}`) so you can see things more clearly - check this after you knit the file to assure it looks like what you expected.
 
 
+```r
+breed_traits_total <- breed_traits %>% 
+  group_by(Breed) %>%
+  pivot_longer(cols = c(`Affectionate With Family`:`Drooling Level`, `Openness To Strangers`:`Mental Stimulation Needs`),
+               names_to = "Rating Type",
+               values_to = "Rating Number") %>% 
+  mutate(total_rating = sum(`Rating Number`)) %>% 
+  filter(total_rating > 0) %>% 
+  select(`Breed`, `total_rating`) %>% 
+  distinct()
 
-  18. The final product of this exercise will be a graph with the top-20 dogs in total ratings (from previous problem) on the y-axis, year on the x-axis, and points colored by each breed's ranking for that year (from the `breed_rank_all` dataset). The points within each breed will be connected by a line, and the breeds should be arranged from the highest median rank to lowest median rank ("highest" is actually the smallest numer, eg. 1 = best). After you're finished, think of AT LEAST one thing you could you do to make this graph better. HINTS: 1. Start with the `breed_rank_all` dataset and pivot it so year is a variable. 2. Use the `separate()` function to get year alone, and there's an extra argument in that function that can make it numeric. 3. For both datasets used, you'll need to `str_squish()` Breed before joining. 
+breed_traits_total %>% 
+  ggplot(aes(x = total_rating, y = fct_reorder(Breed, total_rating, max))) +
+  geom_point() +
+  theme(axis.text.y=element_text( hjust=1, vjust=0.5),
+        text=element_text(size=15), 
+        plot.title = element_text(hjust = 0.5)) +
+  labs(x = "Total Breed Ranking", y = "Breed") +
+  ggtitle("Total Ranks of Dog Breeds")
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
+  18. The final product of this exercise will be a graph with the top-20 dogs in total ratings (from previous problem) on the y-axis, year on the x-axis, and points colored by each breed's ranking for that year (from the `breed_rank_all` dataset). The points within each breed will be connected by a line, and the breeds should be arranged from the highest median rank to lowest median rank ("highest" is actually the smallest number, eg. 1 = best). After you're finished, think of AT LEAST one thing you could you do to make this graph better. HINTS: 1. Start with the `breed_rank_all` dataset and pivot it so year is a variable. 2. Use the `separate()` function to get year alone, and there's an extra argument in that function that can make it numeric. 3. For both datasets used, you'll need to `str_squish()` Breed before joining. 
   
 
+```r
+breed_traits_total %>% 
+  mutate(Breed2 = str_squish(Breed)) %>% 
+  left_join(breed_rank_all %>% 
+              mutate(Breed2 = str_squish(Breed)), 
+            by = c("Breed2")) %>% 
+  arrange(-total_rating) %>% 
+  slice(1:20) %>% 
+  pivot_longer(`2013 Rank`:`2020 Rank`, 
+               names_to = "name", 
+               values_to = "value")  %>% 
+  group_by(Breed2) %>% 
+  mutate(year = parse_number(name), 
+         median_rank = median(value)) %>% 
+  ggplot(aes(x =  year, y = fct_reorder(Breed2, median_rank, .desc = TRUE))) +
+  geom_line() +
+  geom_point(aes(color = value)) +
+  ggtitle("Top 20 Total Ranked Dogs") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(x = "Year", y = "Breed by Median Rank", color = "Breed Rank") +
+  theme_classic() +
+  scale_x_continuous(expand = c(0,0), limits = c(2012, 2021))
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
   
   19. Create your own! Requirements: use a `join` or `pivot` function (or both, if you'd like), a `str_XXX()` function, and a `fct_XXX()` function to create a graph using any of the dog datasets. One suggestion is to try to improve the graph you created for the Tidy Tuesday assignment. If you want an extra challenge, find a way to use the dog images in the `breed_rank_all` file - check out the `ggimage` library and [this resource](https://wilkelab.org/ggtext/) for putting images as labels.
   
 
+```r
+top_ten_dogs <- breed_rank_all %>% 
+  pivot_longer(`2015 Rank`:`2020 Rank`) %>% 
+  filter(value <= 10) %>% 
+  mutate(name = parse_number(name), 
+         Breed2 = str_squish(Breed), 
+         Breed3 = fct_recode(Breed2, 
+                             `German Shorthaired Pointers` = "Pointers (German Shorthaired)", 
+                             `Golden Retrievers` = "Retrievers (Golden)", 
+                             `Labrador Retrievers` = "Retrievers (Labrador)"))
+
+top_ten_dogs %>% 
+  ggplot() +
+  geom_line(aes(x = name, y = value, color = Breed3)) +
+  ggtitle("Top 10 Dog Breeds Every Year Since 2015") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(x = "Year", y = "Rank", color = "Breed") +
+  theme_classic() +
+  scale_y_reverse(n.breaks = 10) + 
+  scale_x_continuous(expand = c(0,0), limits = c(2015, 2020))
+```
+
+![](03_exercises_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
   
 ## GitHub link
 
